@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{addCategory}" method="post">
+    Добавить категорию
+    <input name="category" type="text" id="category" placeholder="Введите категорию"></input>
+    <button type="submit">отправить</button>
+</form>
+<form th:action="@{addProduct}" method="post">
+    Добавить продукт
+    <select type="text" name="category" id="categoryId">
+        <option selected>Выберети категорию...</option>
+        <div th:each="cat : ${categoriesToForm}">
+            <option th:value="${cat.id}" th:text="${cat.category}"></option>
+        </div>
+    </select>
+    <input name="product" type="text" id="product" placeholder="Введите продукт"></input>
+    <input name="price" type="number" id="price" placeholder="Введите цену" step="0.01"></input>
+    <button type="submit">отправить</button>
+</form>
+<div>
+    <a th:href="@{/all}">Показать все категории</a>
+</div>
+<div th:unless="${categories == null}">
+    <div th:each="cat:${categories}">
+        <a th:href="@{/category/{id} (id=${cat.id})}" th:text="${cat.category}"></a>
+        <!--
+        <div th:each="prod:${cat}">
+            <p th:text="${prod.product}"></p>
+        </div>
+        -->
+    </div>
+</div>
+
+<div th:unless="${category == null}">
+
+
+        <div th:each="product : ${category}">
+
+            <p th:text="${product.id} + ' ' + ${product.name} + ' ' + ${product.price} + ' ' + 'Br'"></p>
+            <a th:href="@{/product/{prodId} (prodId=${product.id})}">Добавить в карзину</a>
+
+        </div>
+
+
+</div>
+
+<div th:unless = "${listProducts == nul}">
+    <div th:each="product : ${listProducts}">
+        <p th:text="${product.id} + ' ' + ${product.name} + ' ' + ${product.price} + ' ' + 'Br'"></p>
+    </div>
+</div>
+
+</body>
+</html>
